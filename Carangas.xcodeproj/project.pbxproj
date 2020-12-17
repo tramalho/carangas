@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		371D9660258AE389007703FE /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D965F258AE389007703FE /* Car.swift */; };
+		371D9662258AE4A1007703FE /* Rest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D9661258AE4A1007703FE /* Rest.swift */; };
 		A1B18D051F9C1BDD00313110 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B18D041F9C1BDD00313110 /* AppDelegate.swift */; };
 		A1B18D0A1F9C1BDD00313110 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B18D081F9C1BDD00313110 /* Main.storyboard */; };
 		A1B18D0C1F9C1BDD00313110 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B18D0B1F9C1BDD00313110 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		371D965F258AE389007703FE /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		371D9661258AE4A1007703FE /* Rest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rest.swift; sourceTree = "<group>"; };
 		A1B18D011F9C1BDD00313110 /* Carangas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carangas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B18D041F9C1BDD00313110 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B18D091F9C1BDD00313110 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 				A1B18D0B1F9C1BDD00313110 /* Assets.xcassets */,
 				A1B18D0D1F9C1BDD00313110 /* LaunchScreen.storyboard */,
 				A1B18D101F9C1BDD00313110 /* Info.plist */,
+				371D965F258AE389007703FE /* Car.swift */,
+				371D9661258AE4A1007703FE /* Rest.swift */,
 			);
 			path = Carangas;
 			sourceTree = "<group>";
@@ -144,6 +150,8 @@
 			files = (
 				A1B18D171F9C1D7E00313110 /* CarsTableViewController.swift in Sources */,
 				A1B18D051F9C1BDD00313110 /* AppDelegate.swift in Sources */,
+				371D9660258AE389007703FE /* Car.swift in Sources */,
+				371D9662258AE4A1007703FE /* Rest.swift in Sources */,
 				A1B18D191F9C1DBA00313110 /* AddEditViewController.swift in Sources */,
 				A1B18D1B1F9C1DCF00313110 /* CarViewController.swift in Sources */,
 			);
