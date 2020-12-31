@@ -24,14 +24,20 @@ class AddEditViewController: UIViewController {
     // MARK: - Super Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let car = car {
+            tfBrand.text = car.brand
+            tfName.text = car.name
+            tfPrice.text = "\(String(describing: car.price))"
+            scGasType.selectedSegmentIndex = car.gasType
+            btAddEdit.setTitle("Alterar", for: .normal)
+        } else {
+            car = Car()
+        }
     }
     
     // MARK: - IBActions
     @IBAction func addEdit(_ sender: UIButton) {
-        
-        if car == nil {
-            car = Car()
-        }
         
         if let name = tfName.text {
             car.name = name

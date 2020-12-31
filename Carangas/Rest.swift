@@ -17,6 +17,11 @@ enum CarError {
     case invalidJSON
 }
 
+enum Operation {
+    case save
+    case update
+    case delete
+}
 
 class Rest {
     private static let basePath = "https://carangas.herokuapp.com/cars"
@@ -72,13 +77,40 @@ class Rest {
     }
     
     class func save(car: Car, onComplete: @escaping (Bool) -> Void) {
-        guard let url = URL(string: basePath) else {
+        
+        var op: Operation = .save
+        
+        if car.id != nil {
+            op = .update
+        }
+        
+        operation(car: car, operation: op, onComplete: onComplete)
+    }
+    
+    class func delete(car: Car, onComplete: @escaping (Bool) -> Void) {
+        operation(car: car, operation: .delete, onComplete: onComplete)
+    }
+    
+    private class func operation(car: Car, operation: Operation, onComplete: @escaping (Bool) -> Void) {
+        
+        var method = ""
+        
+        switch operation {
+        case .save:
+            method = "POST"
+        case .update:
+            method = "PUT"
+        case .delete:
+            method = "DELETE"
+        }
+        
+        guard let url = URL(string: idUrl(car: car)) else {
             onComplete(false)
             return
         }
         
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
+        urlRequest.httpMethod = method
         
         guard let json = try? JSONEncoder().encode(car) else {
             onComplete(false)
@@ -100,5 +132,16 @@ class Rest {
         }
         
         dataTask.resume()
+    }
+    
+    private class func idUrl(car: Car) -> String {
+        
+        var finalURL = basePath
+        
+        if car.id != nil {
+            finalURL = basePath + "/\(String(describing: car.id))"
+        }
+        
+        return finalURL
     }
 }
