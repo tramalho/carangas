@@ -25,6 +25,7 @@ enum Operation {
 
 class Rest {
     private static let basePath = "https://carangas.herokuapp.com/cars"
+    private static let brandPath = "https://fipeapi.appspot.com/api/1/carros/marcas.json"
     private static let configuration: URLSessionConfiguration = {
         let config = URLSessionConfiguration.default
         config.allowsCellularAccess = false
@@ -37,7 +38,15 @@ class Rest {
     private static let session = URLSession(configuration: configuration)
     
     class func loadCars(onComplete: @escaping ([Car]) -> Void, onError: @escaping (CarError) -> Void) {
-        guard let url = URL(string: basePath) else {
+        self.load(path: basePath, onComplete: onComplete, onError: onError)
+    }
+    
+    class func loadBrands(onComplete: @escaping ([Brand]?) -> Void, onError: @escaping (CarError) -> Void) {
+        self.load(path: brandPath, onComplete: onComplete, onError: onError)
+    }
+    
+    private class func load<T:Decodable>(path: String, onComplete: @escaping (T) -> Void, onError: @escaping (CarError) -> Void) {
+        guard let url = URL(string: path) else {
             onError(.url)
             return
         }
@@ -56,7 +65,7 @@ class Rest {
                     }
                     
                     do {
-                        let cars = try JSONDecoder().decode([Car].self, from: data)
+                        let cars = try JSONDecoder().decode(T.self, from: data)
                         onComplete(cars)
                     } catch {
                         onError(.invalidJSON)

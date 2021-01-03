@@ -12,28 +12,22 @@ class CarsTableViewController: UITableViewController {
 
     private var cars: [Car] = []
     
+    private lazy var label: UILabel = {
+        
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = UIColor(named: "main")
+        
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Rest.loadCars(onComplete: { (cars) in
-            
-            DispatchQueue.main.async {
-                self.cars = cars
-                self.tableView.reloadData()
-            }
-            
-        }) { (error) in
-            print(error)
-        }
+        loadCars()
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,6 +37,7 @@ class CarsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.backgroundView = cars.count == 0 ? label : nil
         return cars.count
     }
 
@@ -98,22 +93,23 @@ class CarsTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+
+    private func loadCars() {
+        label.text = "Carregando carros..."
+
+        Rest.loadCars(onComplete: { (cars:[Car]) in
+            
+            self.cars = cars
+            DispatchQueue.main.async {
+                self.label.text = "Não existem carros cadastrados"
+                self.tableView.reloadData()
+            }
+            
+        }) { (error) in
+            DispatchQueue.main.async {
+                self.label.text = "Erro ao consultar dados!"
+            }
+            print(error)
+        }
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

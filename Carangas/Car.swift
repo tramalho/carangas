@@ -26,3 +26,7 @@ class Car: Codable {
         }
     }
 }
+
+class Brand: Codable {
+    var fipe_name: String?
+}
