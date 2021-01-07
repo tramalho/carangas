@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class CarViewController: UIViewController {
 
@@ -14,7 +15,9 @@ class CarViewController: UIViewController {
     @IBOutlet weak var lbBrand: UILabel!
     @IBOutlet weak var lbGasType: UILabel!
     @IBOutlet weak var lbPrice: UILabel!
+    @IBOutlet weak var webView: WKWebView!
     
+    @IBOutlet weak var loading: UIActivityIndicatorView!
     // MARK: - Properties
     var car: Car?
 
@@ -38,5 +41,34 @@ class CarViewController: UIViewController {
         if let vc = segue.destination as? AddEditViewController, let car = car {
             vc.car = car
         }
+    }
+    
+    func setupWebView() {
+        
+        if let name = car?.name, let brand = car?.brand {
+            let searchTerm = "\(name) + \(brand)".replacingOccurrences(of: " ", with: "+")
+            
+            let urlString = "www.google.com.br/search?q=\(searchTerm)&tbm=isch"
+            
+            guard let url = URL(string: urlString) else {return }
+
+            let urlRequest = URLRequest(url: url)
+            
+            webView.allowsBackForwardNavigationGestures = true
+            webView.allowsLinkPreview = true
+            webView.navigationDelegate = self
+            webView.uiDelegate = self
+            webView.load(urlRequest)
+        }
+    }
+}
+
+extension CarViewController: WKNavigationDelegate, WKUIDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        loading.stopAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        loading.stopAnimating()
     }
 }
